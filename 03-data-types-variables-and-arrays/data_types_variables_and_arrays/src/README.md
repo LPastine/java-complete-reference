@@ -142,3 +142,82 @@ expressions that govern the control statements such as **if** and **for**.
 
 Here is a program that demonstrates the **boolean** type:
 [BoolTest.java](./examples/chartype/CharDemo2.java)
+
+## Integer Literals
+
+Integers are probably the most commonly used type in the typical program. Any whole number
+value is an integer literal.
+
+Examples are 1, 2, 3 and 42. These are all decimal values, meaning they are describing a base
+10 number.
+
+Two other bases that can be used in integer literals are _octal_ (base eight) and _hexadecimal_
+(base 16).
+
+Integer literals create an **int** value, which in Java is a 32-bit integer value.
+
+Since Java is strongly typed, you might be wondering how it is possible to assign an integer literal
+to one of Java's other integer types, such as **byte** or **long**, without causing a type
+mismatch error.
+
+Fortunately, such situations are easily handled. When a literal value is assigned to a 
+**byte** or **short** variable, no error is generated if the literal value is within the
+range of the target type.
+
+An integer literal can always be assigned to a **long** variable. However, to specify a **long**
+literal, you will need to explicitly tell the compiler that the literal value is of
+type **long**. You do this by appending an upper- or lowercase L to the literal. For example,
+9223372036854775807L, is the largest **long**.
+
+An integer can also be assigned to a **char** as long as it is within range.
+
+You can embed one or more underscores in an integer literal. Doing so makes it easier
+to read large integer literals. When the literal is compiled, the underscores are
+discarded. For example:
+
+```java
+int x = 123_456_789;
+```
+
+## Floating-Point Literals
+
+Floating-point numbers represent decimal values with a fractional component. They can
+be expressed in either standard or scientific notation.
+
+_Standard notation_ consists of a whole number component followed by a decimal point followed
+by a fractional component.
+
+For example, 2.0, 3.14159 and 0.6667 represent valid standard-notation floating-point numbers.
+
+_Scientific notation_ uses a standard-notation floating-point number plus a suffix that
+specifies a power of 10 by which the number is to be multiplied. The exponent is indicated
+by an _E_ or _e_ followed by a decimal number, which can be positive or negative.
+
+Examples include 6.022E23, 314159E-05, and 2e+100.
+
+Floating-point literals in Java default to **double** precision. To specify a **float** literal,
+you must append an _F_ or _f_ to the constant. You can also explicitly specify a **double** literal
+by appending a _D_ or _d_. Doing so, of course is redundant. The default **double** type consumes
+64 bits of storage, while the smaller **float** type requires only 32 bits.
+
+## Boolean Literals
+
+Boolean literals are simple. There are only two logical values that a **boolean** value
+can have, **true** and **false**. The values of **true** and **false** do not convert into
+any numerical representation. The **true** literal in Java does not equal 1, nor does the
+**false** literal equal to 0. In Java, the Boolean literals can only be assigned to variables
+declared as **boolean** or used in expressions with Boolean operators.
+
+## Character Literals
+
+Characters in Java are indices into the Unicode character set. They are 16-bit values that
+can be converted into integers and manipulated with the integer operators, such as the
+addition and subtraction operators.
+
+## String Literals
+
+String literals in Java are specified like they are in most other languages - by enclosing
+a sequence of characters between a pair of double quotes.
+
+Examples are: "Hello World" - "two\nlines" - "\"This is in quotes\""
+

@@ -300,3 +300,116 @@ each time the block in which it is declared is entered. For example, consider th
 Although blocks can be nested, you cannot declare a variable to have the same name as one
 in an outer scope.
 
+## Type Conversion and Casting
+
+### Java's Automatic Conversions
+
+When one type of data is assigned to another type of variable, an _automatic type conversion_ 
+will take place if the following two conditions are met:
+
+- The two types are compatible.
+- The destination type is larger than the source type.
+
+When these two conditions are met, a _widening conversion_ takes place. For example, the **int** type is
+always large enough to hold all valid **byte** values, so no explicit cast statement is required.
+
+For widening conversions, the numeric types, including integer and floating-point types, are
+compatible with each other. However, there are no automatic conversions from the numeric types
+to **char** or **boolean**. Also, **char** and **boolean** are not compatible with each other.
+
+Java also performs an automatic type conversion when storing a literal integer constant into
+variables of type **byte**, **short**, **long**, or **char**.
+
+### Casting Incompatible Types
+
+To create a conversion between two incompatible types, you must use a cast. A _cast_ is
+simply an explicit type conversion. It has this general form:
+
+_(target type) value_
+
+Here _target type_ specifies the desired type to convert the specified value to. For
+example, the following fragment casts an **int** to a **byte**. If the integer's value
+is larger than the range of a **byte**, it will be reduced modulo (the remainder of an
+integer division by) the byte's range.
+
+```java
+int a;
+byte b;
+b = (byte) a;
+```
+
+A different type of conversion will occur when a floating-point value is assigned to an
+integer type: _truncation_. As you know, integers do not have fractional components. Thus,
+when a floating-point value is assigned to an integer type, the fractional component is lost.
+For example, if the value 1.23 is assigned to an integer, the resulting value will simply be 1.
+Of course, if the size of the whole number component is too large to fit into the target
+integer type, then that value will be reduced modulo the target type's range.
+
+The following program demonstrates some type conversions that require casts:
+
+[Conversion.java](./examples/conversion_casting/Conversion.java)
+
+### Automatic Type Promotion in Expressions
+
+In addition to assignments, there is another place where certain type conversions may
+occur: in expressions.
+
+For example:
+
+```java
+byte a = 40;
+byte b = 50;
+byte c = 100;
+int d = a * b / c;
+```
+
+The result of intermediate term **a * b** easily exceeds the range of either of its **byte**
+operands. To handle this kind of problem, Java automatically promotes each **byte**, **short**,
+or **char** operand to **int** when evaluating an expression.
+
+This means that the subexpression **a * b** is performed using integers - not bytes. Thus, 2,000,
+the result of the intermediate expression, is legal even though **a** and **b** are both
+specified as type **byte**.
+
+As useful as the automatic promotions are, they can cause confusing compile-time errors.
+For example, this seemingly correct code causes a problem:
+
+```java
+byte b = 50;
+b = b * 2; // Error! Cannot assign an int to a byte!
+```
+
+The code is attempting to store 50 * 2, a perfectly valid **byte** value, back into a 
+**byte** variable. However, because the operands were automatically promoted to **int**
+when the expression was evaluated, the result has also been promoted to **int**. Thus,
+the result of the expression is now of type **int**, which can't be assigned to a **byte**
+without the use of a cast.
+
+In cases where you understand the consequences of overflow, you should use an explicit
+cast, such as.
+
+```java
+byte b = 50;
+b = (byte) (b * 2);
+```
+
+### The Type Promotion Rules
+
+Java defines several _type promotion_ rules that apply to expressions. They are as follows:
+1. All **byte**, **short**, and **char** values are promoted to **int**, as just described.
+2. If one operand is a **long**, the whole expression is promoted to **long**
+3. If one operand is a **float**, the entire expression is promoted to **float**
+4. If any of the operands are **double**, the result is **double**
+
+The following program demonstrates how each value in the expression gets promoted to match
+the second argument to each binary operator:
+
+[Promote.java](./examples/conversion_casting/Promote.java)
+
+In the first subexpression, **f * b**, **b** is promoted to a **float** and the result
+of the subexpression, is **float**. Next, in the subexpression **i/c**, **c** is promoted
+to **int**, and the result is of type **int**. Then, in **d * s**, the value of **s** is
+promoted to **double**, and the type of the subexpression is **double**. Finally, these
+three intermediate values, **float**, **int** and **double**, are considered. The outcome
+of **float** plus an **int** is a **float**. Then the resultant **float** minus the last **double**
+is promoted to **double**, which is the type for the final result of the expression.

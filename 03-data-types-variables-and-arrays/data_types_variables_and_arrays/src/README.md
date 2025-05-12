@@ -141,7 +141,7 @@ operators, as in the case of **a < b**. **boolean** is also the type _required_ 
 expressions that govern the control statements such as **if** and **for**.
 
 Here is a program that demonstrates the **boolean** type:
-[BoolTest.java](./examples/chartype/CharDemo2.java)
+[BoolTest.java](./examples/booleantype/BoolTest.java)
 
 ## Integer Literals
 
@@ -220,4 +220,83 @@ String literals in Java are specified like they are in most other languages - by
 a sequence of characters between a pair of double quotes.
 
 Examples are: "Hello World" - "two\nlines" - "\"This is in quotes\""
+
+## Variables
+
+The variable is the basic unit of storage in a Java program. A variable is defined
+by the combination of an identifier, a type, and an optional initializer. In addition,
+all variables have a scope, which defines their visibility, and a lifetime.
+
+### Declaring a variable
+
+In Java, all variables must be declared before they can be used. The basic form of
+a variable declaration is shown here:
+
+_type identifier [ = value ][, identifier [ = value ] ...];_
+
+Here, _type_ is one of Java's atomic types, or the name of a class or interface. The
+_identifier_ is the name of the variable. You can initialize the variable by specifying
+an equal sign and a value. Keep in mind that the initialization expression must result
+in a value of the same (or compatible) type as that specified for the variable. To declare
+more than one variable of the specified type, use a comma-separated list.
+
+Here are several examples of variable declarations of various types. Note that some
+include initialization.
+
+```java
+int a, b, c; // declares three ints a, b and c.
+int d = 3, e, f = 5; // declares three more ints, initializing d and f
+byte z = 22; // initializes z
+double pi = 3.14159; // declares an approximation of pi
+char x = 'x'; // the variables x has the value 'x'
+```
+
+The identifiers that you choose have nothing intrinsic in their names that indicates
+their type. Java allows any properly formed identifiers to have any declared type.
+
+### Dynamic Initialization
+
+Although the preceding examples have used only constants as initializers, Java allows
+variables to be initialized dynamically, using any expression valid at the time the
+variable is declared.
+
+For example, here is a short program that computes the length of the hypotenuse of a
+right triangle given the lengths of its two opposing sides:
+
+[DynInit.java](./examples/variables/DynInit.java)
+
+### The scope and Lifetime of Variables
+
+Java allows variables to be declared within any block. A block is begun with an opening
+curly brace and ended by a closing curly brace. A block defined a _scope_.
+
+A scope determines what objects are visible to other parts of your program. It also
+determines the lifetime of those objects.
+
+The scope defined by a method begins with its opening curly brace. However, if that
+method has parameters, they too are included within the method's scope. A method's scope
+ends with its closing curly brace. This block of code is called the _method body_.
+
+As a general rule, variables declared inside a scope are not visible (that is, accessible)
+to code that is defined outside that scope. Thus, when you declare a variable within a
+scope, you are localizing that variable and protecting it from unauthorized access and/or
+modification. Indeed, the scope rules provide the foundation for encapsulation. A variable
+declared within a block is called a _local variable_.
+
+Scopes can be nested. For example, each time you create a block of code, you are creating
+a new, nested scope. When this occurs, the outer scope encloses the inner scope. This means
+that objects declared in the outer scope will be visible to code within the inner scope. However,
+the reverse is not true. Objects declared within the inner scope will not be visible outside it.
+
+To understand the effect of nested scopes, consider the following program:
+
+[Scope.java](./examples/variables/Scope.java)
+
+If a variable declaration includes an initializer, then that variable will be reinitialized
+each time the block in which it is declared is entered. For example, consider the next program
+
+[LifeTime.java](./examples/variables/LifeTime.java)
+
+Although blocks can be nested, you cannot declare a variable to have the same name as one
+in an outer scope.
 

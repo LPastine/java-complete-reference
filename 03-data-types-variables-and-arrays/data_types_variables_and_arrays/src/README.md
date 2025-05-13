@@ -413,3 +413,81 @@ promoted to **double**, and the type of the subexpression is **double**. Finally
 three intermediate values, **float**, **int** and **double**, are considered. The outcome
 of **float** plus an **int** is a **float**. Then the resultant **float** minus the last **double**
 is promoted to **double**, which is the type for the final result of the expression.
+
+## Arrays
+
+An _array_ is a group of like-typed variables that are referred to by a common name. Arrays
+of any type can be created and may have one or more dimensions. A specific element in an
+array is accessed by its index. Arrays offer a convenient means of grouping related information.
+
+### One-Dimensional Arrays
+
+A _one-dimensional array_ is, essentially, a list of like-typed variables. To create an
+array, you first must create an array variable of the desired type. The general form of a
+one-dimensional array declaration is
+
+_type[] var-name;_
+
+Here, _type_ declares the element type (also called the base type) of the array. The element
+type determines the data type of each element that comprises the array. Thus, the element
+type of the array determines what type of data the array will hold. For example:
+
+_int[] month_days;_
+
+Although this declaration establishes the fact that _month_days_ is an array variable,
+no array actually exists. To link **month_days** with an actual, physical array of integers,
+you must allocate one using **new** and assign it to **month_days**. **new** is a special
+operator that allocates memory.
+
+The general form of **new** as it applies to one-dimensional arrays appears as follows:
+
+_array_var = new type [size];_
+
+Here, _type_ specifies the type of the data being allocated, _size_ specifies the number
+of elements in the array, and _array-var_ is the array variable linked to the array.
+That is, to use the **new** to allocate an array, you must specify the type and number of
+elements to allocate. The elements in the array allocated by **new** will automatically
+be initialized to zero (for numeric types), **false** (for **boolean**), or **null** (for 
+reference types, which are described in a later chapter). For example:
+
+_month_days = new int[12];_
+
+After this statement executes, **month_days** will refer to an array of 12 integers. Further,
+all elements in the array will be initialized to zero.
+
+Once you have allocated an array, you can access a specific element in the array by specifying
+its index within square brackets. All array indexes start at zero. For example, this statement
+assigns value 28 to the second element of **mont_days**:
+
+_month_days[1] = 28;_
+
+The next line displays the value stored at index 3:
+
+_System.out.println(month_days[3]);_
+
+Putting together all the pieces, here is a program that creates an array of the number of
+days in each month:
+
+[Array.java](./examples/array/Array.java)
+
+Arrays can be initialized when they are declared. The process is much the same as that used
+to initialize the simple types. An _array initializer_ is a list of comma-separated expressions
+surrounded by curly braces. The commas separate the values of the array elements.
+
+The array will automatically be created large enough to hold the number of elements you
+specify in the array initializer. There is no need to use **new**. For example:
+
+[AutoArray.java](./examples/array/AutoArray.java)
+
+Java strictly checks to make sure you do not accidentally try to store or reference values
+outside the range of the array. The Java run-time system will check that all array indexes
+are in the correct range. For example, the run-time system will check the value of each
+index into **month_days** to make sure that is between 0 and 11, inclusive. If you try to
+access elements outside the range of the array (negative numbers or numbers greater than
+the length of the array), you will cause a run-time error.
+
+Here is one more example that uses a one-dimensional array. It finds the average of a 
+set of numbers.
+
+[Average.java](./examples/array/Average.java)
+

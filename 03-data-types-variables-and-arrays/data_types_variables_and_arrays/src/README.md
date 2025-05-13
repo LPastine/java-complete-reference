@@ -491,3 +491,58 @@ set of numbers.
 
 [Average.java](./examples/array/Average.java)
 
+### Multidimensional Arrays
+
+In Java, _multidimensional arrays_ are implemented as arrays of arrays. To declare a multidimensional
+array variable, specify each additional index using another set of square brackets.
+
+For example, the following declares a two-dimensional array variable called **twoD**:
+
+_int[][] twoD = new int[4][5];_
+
+This allocates a 4-by-5 array and assigns it to **twoD**. Internally, this matrix is implemented
+as an _array of arrays_ of **int**.
+
+The following program numbers each element in the array from left to right, top to bottom,
+and then displays these values:
+
+[TwoDArray.java](./examples/array/TwoDArray.java)
+
+When you allocate memory for a multidimensional array, you need only specify the memory
+for the first (leftmost) dimension. You can allocate the remaining dimensions separately.
+
+For example, this following code allocates memory for the first dimension of **twoD** when
+it is declared. It allocates the second dimension separately.
+
+```java
+int[][] twoD = new int[4][];
+twoD[0] = new int[5];
+twoD[1] = new int[5];
+twoD[2] = new int[5];
+twoD[3] = new int[5];
+```
+
+While there is no advantage to individually allocating the second dimension arrays in this
+situation, there may be in others. For example, when you allocate dimensions individually,
+you do not need to allocate the same number of elements for each dimension. As stated earlier,
+since multidimensional arrays are actually arrays of arrays, the length of each array is
+under your control.
+
+For example, the following program creates a two-dimensional array in which the sizes of
+the second dimension are unequal:
+
+[TwoDAgain.java](./examples/array/TwoDAgain.java)
+
+It is possible to initialize multidimensional arrays. To do so, enclose each dimension's
+initializer within its own set of curly braces.
+
+The following program creates a matrix where each element contains the product of the row
+and column indexes. Also notice that you can use expressions as well as literal values
+inside array initializers.
+
+[Matrix.java](./examples/array/Matrix.java)
+
+The following program creates a 3-by-4-by-5, three-dimensional array. It then loads each element
+with the product of its indexes. Finally, it displays these products.
+
+[ThreeDMatrix.java](./examples/array/ThreeDMatrix.java)

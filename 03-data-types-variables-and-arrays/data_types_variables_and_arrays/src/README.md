@@ -546,3 +546,77 @@ The following program creates a 3-by-4-by-5, three-dimensional array. It then lo
 with the product of its indexes. Finally, it displays these products.
 
 [ThreeDMatrix.java](./examples/array/ThreeDMatrix.java)
+
+## Introducing Type Inference with Local Variables
+
+First, all variables in Java must be declared prior to their use.
+
+Second, a variable can be initialized with a value when it is declared.
+
+Furthermore, when a variable is initialized, the type of the initializer must be the same
+as (or convertible to) the declared type of the variable.
+
+Thus, in principle, it would not be necessary to specify an explicit type for an initialized
+variable because it could be inferred by the type of its initializer.
+
+Local variable type inference offers a number of advantages. For example, it can streamline
+code by eliminating the need to redundantly specify a variable's type when it can be
+inferred from its initializer.
+
+It can simplify declarations in cases in which the type name is quite lengthy, such as
+can be the case with some class names.
+
+It can also be helpful when a type is challenging to discern or cannot be denoted.
+
+Furthermore, local variable type inference has become a common part of the contemporary
+programming environment.
+
+To use local variable type inference, the variable must be declared with **var** as the
+type name, and it must include an initializer. For example, in the past you would declare
+a local **double** called **avg** that is initialized with the value 10.0 as shown here:
+
+_double avg = 10.0;_
+
+Using type inference, this declaration can now also be written like this:
+
+_var avg = 10.0;_
+
+In both cases, **avg** will be of type **double**. In the first case, its type is explicitly
+specified. In the second, its type is inferred as **double** because the initializer 10.0
+is of type **double**.
+
+You can also use **var** to declare an array. For example:
+
+_var myArray = new int[10]; // this is valid_
+
+Notice that neither **var** nor **myArray** has brackets. Instead, the type of **myArray**
+is inferred to be **int[]**.
+
+Furthermore, you _cannot_ use brackets on the left side of a **var** declaration. Thus, both
+of these declarations are invalid:
+
+```java
+var[] myArray = new int[10]; // Wrong
+var myArray[] = new int[10]; // Wrong
+```
+
+It is important to emphasize that **var** can be used to declare a variable only when that
+variable is initialized. For example, the following statement is incorrect:
+
+```java
+var counter; // Wrong! Initializer required.
+```
+
+Also remember that **var** can be used only to declare local variables. It cannot be used
+when declaring instance variables, parameters, or return types, for example.
+
+### Some var Restrictions
+
+In addition to those mentioned in the preceding discussion, several other restrictions
+apply to the use of **var**:
+
+- Only one variable can be declared at a time;
+- A variable cannot use **null** as an initializer;
+- The variable being declared cannot be used by the initializer expression.
+- Although you can declare an array type using **var**, you cannot use **var** with an array initializer.
+

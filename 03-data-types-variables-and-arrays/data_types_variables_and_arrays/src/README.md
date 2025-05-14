@@ -620,3 +620,32 @@ apply to the use of **var**:
 - The variable being declared cannot be used by the initializer expression.
 - Although you can declare an array type using **var**, you cannot use **var** with an array initializer.
 
+## A Few Words About Strings
+
+As you may have noticed, in the preceding discussion of data types and arrays, there has been
+no mention of strings or a string data type. This is not because Java does not support
+such a type—it does. It is just that Java's string type, called **String**, is not a primitive
+type. Nor is it simply an array of characters. Rather, **String** defines an object, and a
+full description of it requires an understanding of several object-related features.
+
+As such, it will be covered later in this book, after objects are described. However, so
+that you can use simple strings in sample programs, the following brief introduction is in
+order.
+
+The **String** type is used to declare string variables. You can also declare arrays of
+strings. A quoted string constant can be assigned to a **String** variable. A variable
+of type **String** can be assigned to another variable of type **String**. You can use
+an object of type **String** as an argument to **println()**. For example, consider
+the following fragment:
+
+```java
+String str = "this is a test";
+System.out.println(str);
+```
+
+Here, **str** is an object of type **String**. It is assigned the string "this is a test".
+This string is displayed by the **println()** statement.
+
+As you will see later, **String** objects have many special features and attributes that
+make them quite powerful and easy to use. However, for the next few chapters, you will
+be using them only in their simplest form.

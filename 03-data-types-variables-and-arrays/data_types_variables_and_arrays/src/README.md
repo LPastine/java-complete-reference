@@ -1,4 +1,5 @@
-# Chapter 3 - Data Types, Variables and Arrays
+
+
 
 ## The Primitive Types
 

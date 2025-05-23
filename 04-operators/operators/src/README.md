@@ -385,3 +385,140 @@ The following program illustrates this point:
 The starting value was carefully chosen so that after being shifted left 4 bit positions, it
 would produce -32. As you can see, when a 1 bit is shifted into bit 31, the number is interpreted
 as negative.
+
+### The Right Shift
+
+The right shift operator, >>, shifts all the bits in a value to the right a specified number
+of times. Its general form is shown here:
+
+_value >> num_
+
+Here, _num_ specifies the number of positions to right-shift the value in _value_. That is, the
+\>> moves all the bits in the specified value to the right the number of bit positions
+specified by _num_.
+
+The following code fragment shifts the value 32 to the right by two positions, resulting in 
+**a** being set to **8**.
+
+```java
+int a = 32;
+a = a >> 2; // a now contains 8
+```
+When a value has bits that are "shifted off", those bits are lost. For example, the next code
+fragment shifts the value 35 to the right two positions, which causes the two low-order bits
+to be lost, resulting again in **a** being set to 8.
+
+```java
+int a = 35;
+a = a >> 2; // a now contains 8
+```
+
+Looking at the same operation in binary shows more clearly how this happens:
+
+```java
+00100011    35
+>> 2
+00001000    8
+```
+
+Each time you shift a value to the right, it divides that value by two - and discards
+any remainder. In some cases, you can take advantage of this for high-performance integer
+division by 2.
+
+When you are shifting right, the top (leftmost) bits exposed by the right shift are filled in
+with the previous contents of the top bit. This is called _sign extension_ and serves to preserve
+the sign of negative numbers when you shift them right. For example, -8 >> 1 is -4, which,
+in binary, is:
+
+```java
+11111000    -8
+>> 1
+11111100    -4
+```
+
+It is interesting to note that if you shift -1 right, the result always remains -1, since sign
+extension keeps bringing in more ones in the high-order bits.
+
+Sometimes it is not desirable to sign-extend values when you are shifting them to the right.
+For example, the following program converts a **byte** value to its hexadecimal string representation.
+Notice that the shifted value is masked by ANDing it with **0x0f** to discard any sign-extended
+bits so that the value can be used as an index into the array of hexadecimal characters.
+
+[HexByte.java](./bitwise/HexByte.java)
+
+### The Unsigned Right Shift
+
+As you have just seen, the >> operator automatically fills the high-order bit with its previous
+contents each time a shift occurs. This preserves the sign of the value. However, sometimes
+that is undesirable. For example, if you are shifting something that does not represent a 
+numeric value, you may not want sign extension to take place. This situation is common when you
+are working with pixel-based values and graphics. In these cases, you will generally want to
+shift a zero into the high-order bit no matter what its initial value was. This is known as
+_unusual shift_. To achieve this, you will use Java's unsigned, shift-right operator, >>>,
+which always shifts zeros into the high-order bit.
+
+The following code fragment demonstrates the >>>. Here, **a** is set to -1, which sets all 32
+bits to 1 in binary. This value is then shifted right 24 bits, filling the top 24 bits with zeros,
+ignoring normal sign extension. This sets **a** to 255.
+
+```java
+int a = -1;
+a = a >>> 24;
+```
+
+Here is the same operation in binary form to further illustrate what is happening:
+
+```java
+11111111 11111111 11111111 11111111 -1 in binary as an int
+>>> 24
+00000000 00000000 00000000 11111111 255 in binary as an int
+```
+
+The >>> operator is often not as useful as you might like, since it is only meaningful for 32-
+and 64-bit values. Remember, smaller values are automatically promoted to **int** in expressions.
+This means that sign extension occurs and that the shift will take place on a 32-bit rather than
+on a 8- or 16-bit value. That is, one might expect an unsigned right shift on a **byte** value
+to zero-fill beginning at bit 7. But this is not the case, since it is a 32-bit value that is
+actually being shifted. The following program demonstrates this effect:
+
+[ByteUShift.java](./bitwise/ByteUShift.java)
+
+The following output of this program shows how the >>> operator appears to do nothing when dealing
+with bytes. The variable **b** is set to an arbitrary negative **byte** value for this demonstration.
+Then **c** is assigned the **byte** value of **b** shifted right by four, which is 0xff because
+of the expected sign extension. 
+
+Then **d** is assigned the **byte** value of **b** unsigned shifted
+right by four. 
+
+Which you might have expected to be 0x0f but is actually 0xff because of the sign
+extension that happened when **b** was promoted to **int** before the shift. 
+
+The last expression sets **e** to the **byte** value of **b** masked to 8 bits using the AND
+operator, then shifted right by four, which produces the expected value of 0x0f. Notice that the
+unsigned shift right operator was not used for **d**, since the state of the sign bit after the
+AND was known.
+
+### Bitwise Operator Compound Assignments
+
+All of the binary bitwise operators have a compound form similar to that of the algebraic operators,
+which combines the assignment with the bitwise operation. For example, the following two statements,
+which shift the value in **a** right by four bits, are equivalent:
+
+```java
+a = a >> 4;
+a >>= 4;
+```
+
+Likewise, the following two statements, which result in **a** being assigned the bitwise expression
+**a** OR **b**, are equivalent:
+
+```java
+a = a | b;
+a |= b;
+```
+
+The following program creates a few integer variables and then uses compound bitwise operator
+assignments to manipulate the variables:
+
+[OpBitEquals.java](./bitwise/OpBitEquals.java)

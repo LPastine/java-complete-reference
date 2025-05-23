@@ -522,3 +522,101 @@ The following program creates a few integer variables and then uses compound bit
 assignments to manipulate the variables:
 
 [OpBitEquals.java](./bitwise/OpBitEquals.java)
+
+## Relational Operators
+
+The _relational operators_ determine the relationship that one operand has to the other.
+Specifically, they determine equality and ordering. The relational operators are shown here:
+
+| Operator | Result                   |
+|----------|--------------------------|
+| ==       | Equal to                 |
+| !=       | Not Equal to             |
+| >        | Greater than             |
+| <        | Less than                |
+| >=       | Greater than or equal to |
+| <=       | Less than or equal to    |
+
+The outcome of these operations is a **boolean** value. The relational operators are most frequently
+used in the expressions that control the **if** statement and various loop statements.
+
+Any type in Java, including integers, floating-point numbers, characters, and Booleans can be
+compared using the equality test, ==, and the inequality test !=. Notice that in Java equality
+is denoted with two equal signs, not one. (Remember: a single equal sign is the assignment
+operator.) Only numeric types can be compared using the ordering operators. That is, only integer,
+floating-point, and character operands may be compared to see which is greater or less than the
+other.
+
+As stated, the result produced by a relational operator is a **boolean** value. For example,
+the following code fragment is perfectly valid:
+
+```java
+int a = 4;
+int b = 1;
+boolean c = a < b;
+```
+
+In this case, the result of **a < b** (which is **false**) is stored in **c**.
+
+If you are coming from a C/C++ background, please note the following. In C/C++, these types
+of statements are widespread.
+
+```C++
+int done;
+// ...
+if(!done)... // Valid in C/C++
+if(done)... // but not in Java
+```
+
+In Java, these statements must be written like this:
+
+```Java
+if(done == 0) ... // This is Java-style
+if(done != 0) ...
+```
+
+The reason is that Java does not define true and false in the same way as C/C++. In C/C++, true
+is any nonzero value and false is zero. In Java, **true** and **false** are nonnumerical values
+that do not relate to zero or nonzero. Therefore, to test for zero or nonzero, you must explicitly
+employ one or more of the relational operators.
+
+### Boolean Logical Operators
+
+The Boolean logical operators shown here operate only on **boolean** operands. All the
+binary logical operators combine two **boolean** values to form a resultant **boolean** value.
+
+| Operator | Result                     |
+|----------|----------------------------|
+| &        | Logical AND                |
+| \|       | Logical OR                 |
+| ^        | Logical XOR (exclusive OR) |
+| \|\|     | Short-circuit OR           |
+| &&       | Short-circuit AND          |
+| !        | Logical unary NOT          |
+| &=       | AND assignment             |
+| \|=      | OR assignment              |
+| ^=       | XOR assignment             |
+| ==       | Equal to                   |
+| !=       | Not equal to               |
+| ?:       | Ternary if-then-else       |
+
+The logical Boolean operators, **&**, **|**, and **^**, operate **boolean** values in the same
+way that they operate on the bits of an integer. The logical **!** operator inverts the Boolean
+state: **!true == false** and **!false == true**. The following table shows the effect of each
+logical operation:
+
+| A     | B     | A \| B | A & B | A ^ B | !A    |
+|-------|-------|--------|-------|-------|-------|
+| False | False | False  | False | False | True  |
+| True  | False | True   | False | True  | False |
+| False | True  | True   | False | True  | True  |
+| True  | True  | True   | True  | False | False |
+
+Here is a program that is almost the same as the **BitLogic** example shown earlier, but
+it operates on **boolean** logical values instead of binary bits:
+
+[BoolLogic.java](./relational/BoolLogic.java)
+
+After running this program, you will see that the same logical rules apply to **boolean** values
+as they did to bits. As you can see from its output, the string representation of a
+Java **boolean** value is one of the literal values **true** or **false**.

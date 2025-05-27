@@ -620,3 +620,47 @@ it operates on **boolean** logical values instead of binary bits:
 After running this program, you will see that the same logical rules apply to **boolean** values
 as they did to bits. As you can see from its output, the string representation of a
 Java **boolean** value is one of the literal values **true** or **false**.
+
+### Short-Circuit Logical Operators
+
+Java provides two interesting Boolean operators not found in some other computer languages.
+
+These are secondary versions of the Boolean AND and OR operators, and are commonly known as
+_short-circuit_ logical operators. As you can see from the preceeding table, the OR operator
+results in **true** when **A** is **true**, no matter what **B** is.
+
+Similarly, the AND operator results in **false** when **A** is false, no matter what **B** is.
+
+If you use the **||** and **&&** forms rather than the **|** and **&** forms of these operators,
+Java will not bother to evaluate the right-hand operand when the outcome of the expression can
+be determined by the left operand alone.
+
+This is invaluable when the right-hand operad depends on the value of the left one to
+function properly.
+
+For example, the following code fragment shows how you can take advantage of short-circuit
+logical evaluation to be sure that a division operation will be valid before evaluating it:
+
+```java
+if (denom != 0 && num / denom > 10)
+```
+
+Since the short-circuit form of AND (**&&**) is used, there is no risk of causing a run-time
+exception when **denom** is zero. If this line of code were written using a single **&** version
+of AND, both sides would be evaluated, causing a run-time exception when **denom** is zero.
+
+It is standard practice to use the short-circuit forms of AND and OR in cases involving
+Boolean logic, leaving the single-character versions exclusively for bitwise operations.
+
+However, there are exceptions to this rule. For example, consider the following statement:
+
+```java
+if (c == 1 & e++ < 100) d = 100;
+```
+
+Here, using a single **&** ensures that the increment operation will be applied to **e** wether
+**c** is equal to 1 or not.
+
+Note: The formal specification for Java refers to the short-circuit operators as the
+_conditional-and_ and the _conditional-or_
+

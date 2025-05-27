@@ -664,3 +664,30 @@ Here, using a single **&** ensures that the increment operation will be applied 
 Note: The formal specification for Java refers to the short-circuit operators as the
 _conditional-and_ and the _conditional-or_
 
+### The Assignment Operator
+
+The _assignment operator_ is the single equal sign, =. The assignment operator works in Java
+much as it does in any other computer language. It has this general form:
+
+```java
+var = expression;
+```
+
+Here, the type of _var_ must be compatible with the type of _expression_.
+
+The assignment operator does have one interesting attribute that you may not be familiar with:
+it allows you to create a chain of assignments. For example, consider this fragment:
+
+```java
+int x, y, z;
+
+x = y = z = 100; // set x, y, and z to 100
+```
+
+This fragment sets the variable **x**, **y**, and **z** to 100 using a single statement.
+
+This works because the = is an operator that yields the value of the right-hand expression.
+Thus, the value of **z = 100** is 100, which is then assigned to **y**, which in turn is assigned
+to **x**. Using a "chain of assignment" is an easy way to set a group of variables to a common
+value.
+

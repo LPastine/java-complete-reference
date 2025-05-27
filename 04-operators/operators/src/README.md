@@ -691,3 +691,36 @@ Thus, the value of **z = 100** is 100, which is then assigned to **y**, which in
 to **x**. Using a "chain of assignment" is an easy way to set a group of variables to a common
 value.
 
+### The ? Operator
+
+Java includes a special _ternary_ (three-way) _operator_ that can replace certain types of
+if-then-else statements. This operator is the ?. The ? has this general form:
+
+```java
+expression1 ? expression2 : expression3
+```
+
+Here, _expression1_ can be any expression that evaluates to a **boolean** value. If _expression1_
+is **true**, then _expression2_ is evaluated; otherwise, _expression3_ is evaluated.
+
+The result of the ? operation is that of the expression evaluated. Both _expression2_ and
+_expression3_ are required to return the same (or compatible) type, which can't be **void**.
+
+Here is an example of the way that the ? is used:
+
+```java
+ratio = denom == 0 ? 0 : num / denom;
+```
+
+When Java evaluates this assignment expression. it first looks at the expression to the _left_
+of the question mark. If **denom** equals zero, then the expression _between_ the question
+mark and the colon is evaluated and used as the value of the entire ? expression. If **denom**
+does not equal zero, then the expression _after_ the colon is evaluated and used for the value
+of the entire ? expression. The result produced by the ? operator is then assigned to **ratio**.
+
+Here is a program that demonstrates the ? operator. It uses it to obtain the absolute value
+of a variable.
+
+[Ternary.java](./relational/Ternary.java)
+
+

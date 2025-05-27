@@ -723,4 +723,62 @@ of a variable.
 
 [Ternary.java](./relational/Ternary.java)
 
+### Operator Precedence
 
+The following table shows the order of precedence for Java operators, from highest to lowest.
+Operators in the same row are equal in precedence. In binary operations, the order of 
+evaluation is left to right (except for assignment, which evaluates right to left). Although
+they are technically separators, the [], (), and . can also act like operators. In that
+capacity, they would have the highest precedence. Also, notice the arrow operator (->). It
+is used in lambda expressions.
+
+| **Highest**  | Col 2        | Col 3 | Col 4 | Col 5      | Col 6     | Col 7      |
+|--------------|--------------|-------|-------|------------|-----------|------------|
+| ++ (postfix) | -- (postfix) |       |       |            |           |            |
+| ++ (prefix)  | -- (prefix)  | ~     | !     | + (unary)  | - (unary) | (type-cast |
+| *            | /            | %     |       |            |           |            |
+| +            | -            |       |       |            |           |            |
+| \>>          | \>>>         | \<<   |       |            |           |            |
+| \>           | \>=          | \<    | \<=   | instanceof |           |            |
+| ==           | !=           |       |       |            |           |            |
+| &            |              |       |       |            |           |            |
+| ^            |              |       |       |            |           |            |
+| \|           |              |       |       |            |           |            |
+| &&           |              |       |       |            |           |            |
+| \|\|         |              |       |       |            |           |            |
+| ?:           |              |       |       |            |           |            |
+| ->           |              |       |       |            |           |            |
+| =            | op=          |       |       |            |           |            |
+| **Lowest**   |              |       |       |            |           |            |
+
+
+### Using Parentheses
+
+_Parentheses_ raise the precedence of the operations that are inside them. This is often necessary
+to obtain the result you desire. For example, consider the following expression:
+
+a >> b + 3
+
+This expression first adds 3 to **b** and then shifts **a** right by that result. That is,
+this expression can be rewritten using redundant parentheses like this:
+
+a >> (b + 3)
+
+However, if you want to first shift **a** right by **b** positions and then add 3 to that
+result, you will need to parenthesize the expression like this:
+
+(a >> b) + 3
+
+In addition to altering the normal precedence of an operator, parentheses can sometimes be
+used to help clarify the meaning of an expression. For anyone reading your code, a complicated
+expression can be difficult to understand. Adding redundant but clarifying parentheses to 
+complex expressions can help prevent confusion later. For example, which of the following
+expressions is easier to read?
+
+```java
+a | 4 + c >> b & 7
+(a | (((4 + c) >> b) & 7))
+```
+
+One other point: parentheses (redundant or not) do not degrade the performance of your program.
+Therefore, adding parentheses to reduce ambiguity does not negatively affect your program.

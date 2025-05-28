@@ -180,7 +180,94 @@ sequence. When a **break** statement is encountered, execution branches to the
 first line of code that follows the entire **switch** statement. This has the
 effect of "jumping out" of the **switch**.
 
+Here's a simple example that uses a **switch** statement:
+
+[SampleSwitch.java](./selection_statements/SampleSwitch.java)
+
+As you can see, each time through the loop, the statements associated with the **case**
+constant that matches **i** are executed. All others are bypassed. After **i** is greater
+than 3, no **case** statements match, so the **default** statement is executed.
+
+The **break** statement is optional. If you omit the **break**, execution will continue
+on into the next **case**. It is sometimes desirable to have multiple **cases** without
+**break** statements between them. For example, consider the following program:
+
+[MissingBreak.java](./selection_statements/MissingBreak.java)
+
+As you can see, execution falls through each **case** until a **break** statement (or
+the end of the **switch**) is reached.
+
+While the preceding example is, of course, contrived for the sake of illustration, omitting
+the **break** statement has many practical applications in real programs. To sample its
+more realistic usage, consider the following rewrite of the season example shown earlier.
+This version uses a **switch** to provide a more efficient implementation.
+
+[Switch.java](./selection_statements/Switch.java)
+
+As mentioned, you can also use a string to control a **switch** statement. For example:
+
+[StringSwitch.java](./selection_statements/StringSwitch.java)
+
+Being able to use strings in a **switch** statement streamlines many situations. For example,
+using a string-based **switch** is an improvement over using the equivalent sequence of
+**if/else** statements. However, switching on strings can be more expensive than switching
+on integers.
+
+Therefore, it is best to switch on strings only in cases in which the controlling data
+is already in string form. In other words, don't use strings in a **switch** unnecessarily.
+
 #### Nested switch Statements
+
+You can use a **switch** as part of the statement sequence of an outer **switch**. This is
+called a _nested_ **switch**. Since a **switch** statement defines its own block, no
+conflicts arise between the **case** constants in the inner **switch** and those in the
+outer **switch**. For example, the following fragment is perfectly valid:
+
+```java
+switch (count) {
+    case 1:
+        switch (target) { // nested switch
+            case 0:
+                System.out.println("target is zero");
+                break;
+            case 1: // no conflicts with outer switch
+                System.out.println("target is one");
+                break;
+        }
+        break;
+    case 2: // ...
+}
+```
+
+Here the **case 1:** statement in the inner switch does not conflict with the **case 1:** 
+statement in the outer switch. The **count** variable is compared only with the list of
+cases at the outer level. If **count** is 1, then **target** is compared with the inner
+list cases.
+
+In summary, there are three important features of the **switch** statement to note:
+
+1. The **switch** differs from the **if** in that **switch** can only test for equality,
+whereas **if** can evaluate any type of Boolean expression. That is, the **switch**
+looks only for a match between the value of the expression and one of its **case**
+constants.
+2. No two **case** constants in the same **switch** can have identical values. Of course,
+a **switch** statement and an enclosing outer **switch** can have **case** constants in
+common.
+3. A **switch** statement is usually more efficient than a set of nested **if**s.
+
+The last point is particularly interesting because it gives insight into how the Java
+compiler works. When it compiles a **switch** statement, the Java compiler will inspect
+each of the **case** constants and create a "jump table" that it will use for selecting
+the path of execution depending on the value of the expression. Therefore, if you need
+to select among a large group of values, a **switch** statement will run much faster
+than the equivalent logic coded using a sequence of **if-else**s. The compiler can do
+this because it knows that the **case** constants are all the same type and simply must
+be compared for equality with the **switch** expression. The compiler has no such knowledge
+of a long list of **if** expressions.
+
+Note: Recently, the capabilities and features of **switch** have been substantially
+expanded beyond those offered by the traditional **switch** just described. Refer to
+Chapter 17 for details on the enhanced **switch**.
 
 ## Iteration Statements
 

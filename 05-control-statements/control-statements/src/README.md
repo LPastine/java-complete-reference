@@ -481,14 +481,203 @@ for (int i = 1; !done; i++) {
 In this example, the **for** loop continues to run until the **boolean** variable **done**
 is set to **true**. It does not test the value of **i**.
 
+Here is another interesting **for** loop variation. Either the initialization or the iteration
+expression or both may be absent, as in this program:
+
+[ForVar.java](./iteration_statements/ForVar.java)
+
+Here, the initialization and iteration expressions have been moved out of the **for**.
+Thus, parts of the **for** are empty. While this is of no value in this simple example - 
+indeed, it would be considered quite poor style - there can be times when this type of
+approach makes sense. For example, if the initial condition is set through a complex
+expression elsewhere in the program or if the loop control variable changes in a nonsequential
+manner determined by actions that occur within the body of the loop, it may be appropriate
+to leave these parts of the **for** empty.
+
+Here is one more **for** loop variation. You can intentionally create an infinite loop (a
+loop that never terminates) if you leave all three parts of the **for** empty. For example:
+
+```java
+for ( ; ; ) {
+    // ...
+}
+```
+
+This loop will run forever there is no condition under which it will terminate. Although,
+there are some programs, such as operating system command processors, that require an
+infinite loop, most "infinite loops" are really just loops with special termination requirements.
+As you will soon see, there is a way to terminate a loop - even an infinite loop like the
+one shown - that does not make use of the normal loop conditional expression.
 
 ### The For-Each Version of the for Loop
 
+A second form of **for** implements a "for-each" style loop. As you may know, contemporary
+language theory has embraced the for-each concept, and it has become a standard feature
+that programmers have come to expect. 
+
+A for-each style loop is designed to cycle through
+a collection of objects, such as an array, in strictly sequential fashion, from start to
+finish. 
+
+In java, the for-each style of **for** is also referred to as the _enhanced_ **for**
+loop.
+
+The general form of the for-each version of the **for** is shown here:
+
+for(_type itr-var : collection_) _statement-block_
+
+Here, _type_ specifies the type and _itr-var_ specifies the name of an _iteration variable_ 
+that will receive the elements from a collection, one at a time, from beginning to end. 
+
+The collection being cycled through is specified by _collection_.
+
+There are various types of collections that can be used with the **for**, but the only
+type used in this chapter is the array. (Other types of collections that can be used
+with the **for**, such as those defined by the Collections Framework, are discussed later
+in this book.)
+
+With each iteration of the loop, the next element in the collection is retrieved and stored
+in _itr-var_. The loop repeats until all elements in the collection have been obtained.
+
+Because the iteration variable receives values from the collection, _type_ must be the
+same as (or compatible with) the elements stored in the collection. Thus, when iterating
+over arrays, _type_ must be compatible with the element type of the array.
+
+To understand the motivation behind a for-each style loop, consider the type of _for_ loop
+that it is designed to replace. The following fragment uses a traditional **for** loop
+to compute the sum of the values in an array:
+
+```java
+
+int [] nums = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+
+for (int i = 0; i < 10; i++) sum += nums[i];
+```
+
+To compute the sum, each element in **nums** is read, in order, from start to finish.
+Thus, the entire array in strictly sequential order. This is accomplished by manually
+indexing the **nums** array by **i**, the loop control variable.
+
+The for-each style **for** automates the preceding loop. Specifically it eliminates the
+need to establish a loop counter, specify a starting and ending value, and manually index
+the array. Instead, it automatically cycles through the entire array, obtaining one element
+at a time, in sequence, from beginning to end. For example, here is the preceding fragment
+rewritten using a for-each version of the **for**:
+
+```java
+int[] nums = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+int sum = 0;
+
+for (int x: nums) sum += x;
+```
+
+With each pass through the loop, **x** is automatically given a value equal to the next
+element in **nums**. Thus, on the first iteration, **x** contains 1; on the second iteration,
+**x** contains 2; and so on. Not only is the syntax streamlined, but it also prevents
+boundary errors.
+
+Here is an entire program that demonstrates the for-each version of the **for** just
+described:
+
+[ForEach.java](./iteration_statements/ForEach.java)
+
+Although the for-each **for** loop iterates until all elements in an array have been examined,
+it is possible to terminate the loop early by using a **break** statement. For example, this
+program sums only the first five elements of **nums**:
+
+[ForEachTwo.java](./iteration_statements/ForEachTwo.java)
+
+The **break** statement can also be used with Java's other loops, and it is discussed in
+detail later in this chapter.
+
+There is one important point to understand about the for-each style loop. Its iteration
+variable is "read-only" as it relates to the underlying array. An assignment to the iteration
+variable has no effect on the underlying array.
+
+In other words, you can't change the contents of the array by assigning the iteration
+variable a new value.
+
+For example, consider this program:
+
+[NoChange.java](./iteration_statements/NoChange.java)
+
 #### Iterating Over Multidimensional Arrays
+
+The enhanced version of the **for** also works on multidimensional arrays. Remember,
+however, that in Java, multidimensional arrays consist of _arrays of arrays_. (For example,
+a two-dimensional array is an array of one-dimensional arrays.)
+
+This is important when iterating over a multidimensional array, because each iteration variable
+in the **for** loop must be compatible with the type of array being obtained. For example,
+in the case of a two-dimensional array, the iteration variable must be a reference to a 
+one-dimensional array.
+
+In general, when using the for-each **for** to iterate over an array of _N_ dimensions,
+the objects obtained will be arrays of _N-1_ dimensions.
+
+To understand the implications of this, consider the following program. It uses nested
+**for** loops to obtain the elements of a two-dimensional array in row-order, from first
+to last.
+
+[ForEachThree.java](./iteration_statements/ForEachThree.java)
+
+In the program, pay special attention to this line:
+
+for(int[] x : nums)
+
+Notice how **x** is declared. It is a reference to a one-dimensional array of integers.
+This is necessary because each iteration of the **for** obtains the next _array_ in **nums**,
+beginning with the array specified by **nums[0]**.
+
+The inner **for** loop then cycles through each of these arrays, displaying the values
+of each element.
 
 #### Applying the Enhanced for
 
+Since the for-each style **for** can only cycle through an array sequentially, from start
+to finish, you might think that its use is limited, but this is not true. A large number
+of algorithms require exactly this mechanism. One of the most common is searching.
+
+For example, the following program uses a **for** loop to search an unsorted array for a
+value. It stops if the value is found.
+
+[Search.java](./iteration_statements/Search.java)
+
+The for-each style **for** is an excellent choice in this application because searching
+an unsorted array involves examining each element in sequence. (Of course, if the array
+were sorted, a binary search could be used, which would require a different style loop.)
+
+Other types of applications that benefit from for-each style loops include computing an
+average, finding the minimum or maximum of a set, looking for duplicates, and so on.
+
+Although we have been using arrays in the examples in this chapter, the for-each style
+**for** is especially useful when operating on collections defined by the Collections
+Framework. More generally, the **for** can cycle through the elements of any collection
+of objects, as long as that collection satisfies a certain set of constraints, which are
+described in Chapter 20.
+
 ### Local Variable Type Inference in a for Loop
+
+To use local variable type inference, the type of the variable is specified as **var**
+and the variable must be initialized. Local variable type inference can be used in a 
+**for** loop when declaring and initializing the loop control variable inside a traditional
+**for** loop, or when specifying the iteration variable in a for-each **for**.
+
+The following program shows an example of each case:
+
+[TypeInferenceInFor.java](./iteration_statements/TypeInferenceInFor.java)
+
+In this example, loop control variable **x** in this line:
+
+for (var x = 2.5; x < 100.0; x = x * 2)
+
+is inferred to be type **double** because that is the type of its initializer.
+
+Iteration variable **v** is this line:
+
+for (var v : nums)
+
+inferred to be of type **int** because that is the element type of the array **nums**.
 
 ### Nested Loops
 

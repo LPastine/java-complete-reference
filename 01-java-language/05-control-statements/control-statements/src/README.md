@@ -681,7 +681,14 @@ inferred to be of type **int** because that is the element type of the array **n
 
 ### Nested Loops
 
+Like all other programming languages, Java allows loops to be nested. That is, one loop may
+be inside another. For example, here is a program that nests **for** loops.
+
+[Nested.java](./iteration_statements/Nested.java)
+
 ## Jump Statements
+
+
 
 ### Using break
 

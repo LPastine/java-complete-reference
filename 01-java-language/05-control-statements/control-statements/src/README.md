@@ -688,15 +688,185 @@ be inside another. For example, here is a program that nests **for** loops.
 
 ## Jump Statements
 
+Java supports three jump statements: **break**, **continue**, and **return**. These statements
+transfer control to another part of your program. Each is examined here.
 
+Note: In addition to the jump statements discussed here, Java supports one other way that 
+you can change your program's flow of execution: through exception handling. Exception handling
+provides a structured method by which run-time errors can be trapped and handled by your program.
+
+It is supported by the keywords **try**, **catch**, **throw**, **throws**, and **finally**.
+
+In essence, the exception handling mechanism allows your program to perform a nonlocal branch.
+
+Since exception handling is a large topic, it is discussed in its own chapter, Chapter 10.
 
 ### Using break
 
+In Java, the **break** statement has three uses:
+
+1. It terminates a statement sequence in a **switch** statement.
+2. It can be used to exit a loop
+3. It can be used as a "civilized" form of goto.
+
+The last two uses are explained here.
+
 #### Using break to Exit a Loop
+
+By using **break**, you can force immediate termination of a loop, bypassing the conditional
+expression and any remaining code in the body of the loop. When a **break** statement is
+encountered inside a loop, the loop is terminated and program control resumes at the next
+statement following the loop.
+
+Here is an example:
+
+[BreakLoop.java](./jump_statements/BreakLoop.java)
+
+As you can see, although the **for** loop is designed to run from 0 to 99, the **break** statement
+causes it to terminate early, when **i** equals 10.
+
+The **break** statement can be used with any of Java's loops, including intentionally infinite
+loops. For example, here is the preceding program coded by use of a **while** loop.
+
+The output from the program is the same as just shown.
+
+[BreakLoopTwo.java](./jump_statements/BreakLoopTwo.java)
+
+When used inside a set of nested loops, the **break** statement will only break out of the
+innermost loop. For example:
+
+[BreakLoopThree.java](./jump_statements/BreakLoopThree.java)
+
+As you can see, the **break** statement in the inner loop only causes termination of that loop.
+The outer loop is unaffected.
+
+Here are two other points to remember about **break**:
+
+1. More than one **break** statement may appear in a loop. However, be careful. Too many
+**break** statements have the tendency to destructure your code.
+2. The **break** that terminates a **switch** statement affects only that **switch** statement
+and not any enclosing loops.
+
+Remember: **break** was not designed to provide the normal means by which a loop is terminated.
+The loop's conditional expression serves this purpose. The **break** statement should be used
+to cancel a loop only when some sort of special situation occurs.
 
 #### Using break as a Form of Goto
 
+In addition to its uses with the **switch** statement and loops, the **break** statement can
+also be employed by itself to provide a "civilized" form of the goto statement.
+
+Java does not have a goto statement because it provides a way to branch in an arbitrary and
+unstructured manner. This usually makes goto-ridden code hard to understand and hard to maintain.
+
+It also prohibits certain compiler optimizations. There are, however, a few places where the goto
+is a valuable and legitimate construct for flow control.
+
+For example, the goto can be useful when you are exiting from a deeply nested set of loops. To
+handle such situations, Java defines an expanded form of the **break** statement. By using this
+form of **break**, you can, for example, break out of one or more blocks of code.
+
+These blocks need not be part of a loop or a **switch**. They can be any block. Further, you
+can specify precisely where execution will resume. because this form of **break** works with
+a label. As you will see, **break** gives you the benefits of a goto without its problems.
+
+The general form of the labeled **break** statement is shown here:
+
+break _label_;
+
+Most often, _label_ is the name of a label that identifies a block of code. This can be a 
+stand-alone block of code but it can also be a block that is the target of another statement.
+
+When this form of **break** executes, control is transferred out of the named block. The
+labeled block must enclose the **break** statement, but it does not need to be the immediately
+enclosing block.
+
+This means, for example, that you can use a labeled **break** statement to exit from a set of
+nested blocks. But you cannot use **break** to transfer control out of a block that does not
+enclose the **break** statement.
+
+To name a block, put a label at the start of it. A _label_ is any valid Java identifier followed
+by a colon. Once you have labeled a block, you can then use this label as the target of a **break**
+statement. Doing so causes execution to resume at the _end_ of the labeled block.
+
+For example, the following program shows three nested blocks, each with its own label. The
+**break** statement causes execution to jump forward, past the end of the block labeled
+**second**, skipping the two **println()** statements.
+
+[Break.java](./jump_statements/Break.java)
+
+One of the most common uses for a labeled break statement is to exit from nested loops. For
+example, in the following program, the outer loop executes only once:
+
+[BreakLoopFour.java](./jump_statements/BreakLoopFour.java)
+
+As you can see, when the inner loop breaks to the outer loop, both loops have been terminated.
+Notice that this example labels the **for** statement, which has a block of code as its target.
+
+Keep in mind that you cannot break to any label that is not defined for an enclosing block.
+For example, the following program is invalid and will not compile:
+
+[BreakErr.java](./jump_statements/BreakErr.java)
+
+Since the loop labeled **one** does not enclose the **break** statement, it is not possible
+to transfer control out of that block.
+
 ### Using continue
+
+Sometimes it is useful to force an early iteration of a loop. That is, you might want to continue
+running the loop but stop processing the remainder of the code in its body for this particular
+iteration.
+
+This is, in effect, a goto just past the body of the loop, to the loop's end. The **continue**
+statement performs such an action. 
+
+In **while** and **do-while** loops, a **continue** statement causes control to be 
+transferred directly to the conditional expression that controls the loop.
+
+In a **for** loop, control goes first to the iteration portion of the **for** statement and
+then to the conditional expression.
+
+For all three loops, any intermediate code is bypassed.
+
+Here is a sample program that uses **continue** to cause two numbers to be printed on each line:
+
+[Continue.java](./jump_statements/Continue.java)
+
+As with the **break** statement, **continue** may specify a label to describe which enclosing
+loop to continue. Here is a sample program that uses **continue** to print a triangular multiplication
+table for 0 through 9:
+
+[ContinueLabel.java](./jump_statements/ContinueLabel.java)
+
+Good uses of **continue** are rare. One reason is that Java provides a rich set of loop
+statements that fit most applications. However, for those special circumstances in which
+early iteration is needed, the **continue** statement provides a structured way to accomplish
+it.
 
 ### return
 
+The last control statement is **return**. The **return** statement is used to explicitly return
+from a method. That is, it causes program control to transfer back to the caller of the method.
+As such, it is categorized as a jump statement. 
+
+Although a full discussion of **return** must wait until methods are discussed in Chapter 6,
+a brief look at **return** is presented here.
+
+At any time in a method, the **return** statement can be used to cause execution to branch back
+to the caller of the method. Thus, the **return** statement immediately terminates the method
+in which it is executed. The following example illustrates this point.
+
+Here, **return** causes execution to return to the Java run-time system, since it is the run-time
+system that calls **main()**:
+
+[Return.java](./jump_statements/Return.java)
+
+As you can see, the final **println()** statement is not executed. As soon as **return** is executed,
+control passes back to the caller.
+
+One last point: In the preceding program, the **if(t)** statement is necessary. Without it,
+the Java compiler would flag an "unreachable code" error because the compiler would know that
+the last **println()** statement would never be executed.
+
+To prevent this error, the **if** statement is used here to trick the compiler for the sake
+of this demonstration.

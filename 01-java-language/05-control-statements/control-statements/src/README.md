@@ -1,5 +1,23 @@
 # Chapter 5 - Control Statements
 
+## Table of contents:
+
+- [Selection Statements](#javas-selection-statements)
+    - [if](#if)
+    - [switch](#the-traditional-switch)
+- [Iteration Statements](#iteration-statements)
+    - [while](#while)
+    - [do-while](#do-while)
+    - [for](#for)
+    - [Using the Comma](#using-the-comma)
+    - [for-each](#the-for-each-version-of-the-for-loop)
+    - [Local Variable Type Inference in a for loop](#local-variable-type-inference-in-a-for-loop)
+    - [Nested Loops](#the-for-each-version-of-the-for-loop)
+- [Jump Statements](#jump-statements)
+    - [break](#using-break)
+    - [continue](#using-continue)
+    - [return](#return)
+
 A programming language uses _control_ statements to cause the flow of execution
 to advance and branch based on changes to the state of a program. 
 

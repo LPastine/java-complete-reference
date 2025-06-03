@@ -162,8 +162,47 @@ For example, the following program declares two **Box** objects:
 
 [BoxDemoTwo.java](./fundamentals/BoxDemoTwo.java)
 
-
 ## Declaring Objects
+
+As just explained, when you create a class, you are creating a new data type. You can use
+this type to declare objects of that type. However, obtaining objects of a class is a two-step
+process. 
+
+- First, you must declare a variable of the class type. This variable does not define an object.
+Instead, it is simply a variable that can _refer_ to an object.
+
+- Second, you must acquire an actual, physical copy of the object and assign it to that variable.
+You can do this using the **new** operator.
+
+The **new** operator dynamically allocates (that is, allocates at run time) memory for an object
+and returns a reference to it. This reference is, essentially, the address in memory of the object
+allocated by **new**. This reference is then stored in the variable. Thus, in Java, all class
+objects must be dynamically allocated. Let's look at the details of this procedure.
+
+In the preceding sample programs, a line similar to the following is used to declare an object
+of type **Box**:
+
+```java
+Box mybox = new Box();
+```
+
+This statement combines the two steps just described. It can be rewritten like this to show
+each step more clearly:
+
+```java
+Box mybox; // declare reference to object
+mybox = new Box(); // allocate a Box object
+```
+
+The first line declares **mybox** as a reference to an object of type **Box**. At this point,
+**mybox** does not yet refer to an actual object.
+
+The next line allocates an object and assigns a reference to it to **mybox**.
+
+After the second line executes, you can use **mybox** as if it were a **Box** object. The effect
+of these two lines of code is depicted here:
+
+![figure-6-1.png](images/figure-6-1.png)
 
 ### A Closer Look at new
 

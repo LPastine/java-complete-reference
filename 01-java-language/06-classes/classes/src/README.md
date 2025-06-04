@@ -206,15 +206,266 @@ of these two lines of code is depicted here:
 
 ### A Closer Look at new
 
+As just explained, the **new** operator dynamically allocates memory for an object. In
+the context of an assignment, it has this general form:
+
+_class-var_ = new _classname();_
+
+Here, _class-var_ is a variable of the class type being created. The _classsname_ is the name
+of the class that is being instantiated. The class name followed by parentheses specifies the
+_constructor_ for the class. A constructor defines what occurs when an object of a class is created.
+
+Constructors are an important part of all classes and have many significant attributes. Most
+real-world classes explicitly define their own constructors within their class definition.
+
+However, if no explicit constructor is specified, then Java will automatically supply a default
+constructor. This is the case with **Box**. For now, we will use the default constructor. Soon,
+you will see how to define your own constructors.
+
+At this point, you might be wondering why you do not need to use **new** for such things as
+integers or characters. The answer is that Java's primitive types are not implemented as objects.
+Rather, they are implemented as "normal" variables. This is done in the interest of efficiency.
+
+As you will see, objects have many features and attributes that require Java to treat them
+differently than it treats the primitive types. By not applying the same overhead to the primitive
+types that applies to objects, Java can implement the primitive types more efficiently.
+
+Later, you will see object versions of the primitive types that are available for your use in
+those situations in which complete objects of these types are needed.
+
+It is important to understand that **new** allocates memory for an object during run time. The
+advantage of this approach is that your program can create as many or as few objects as it needs
+during the execution of your program.
+
+However, since memory is finite, it is possible that **new** will not be able to allocate memory
+for an object because insufficient memory exists. If this happens, a run-time exception will
+occur. For the sample programs in this book, you won't need to worry about running out of memory,
+but you will need to consider this possibility in real-world programs that you write.
+
+Let's once again review the distinction between a class and an object. A class creates new data type
+that can be used to create objects. That is, a class creates a logical framework that defines
+the relationship between its members.
+
+When you declare an object of a class, you are creating an instance of that class. Thus, a class
+is a logical construct. An object has physical reality. (That is, an object occupies space in
+memory.) It is important to keep this distinction clearly in mind.
+
 ### Assigning Object Reference Variables
+
+Object reference variables act differently than you might expect when an assignment takes place.
+
+For example, what do you think this fragment does?
+
+```java
+Box b1 = new Box();
+Box b2 = b1;
+```
+
+You might think that **b2** is being assigned a reference to a copy of the object referred to
+by **b1**. That is, you might think that **b1** and **b2** refer to separate and distinct objects.
+
+However, this would be wrong. Instead, after this fragment executes, **b1** and **b2** will both
+refer to the _same_ object. The assignment of **b1** to **b2** did not allocate memory or copy any
+part of the original object. It simply makes **b2** refer to the same object as does **b1**. Thus,
+any changes made to the object through **b2** will affect the object to which **b1** is referring,
+since they are the same object.
+
+This situation is depicted here:
+
+![classes-01.png](images/classes-01.png)
+
+Although **b1** and **b2** both refer to the same object, they are not linked in any other way.
+For example, a subsequent assignment to **b1** will simply _unhook_ **b1** from the original
+object without affecting the object or affecting **b2**. For example:
+
+```java
+Box b1 = new Box();
+Box b2 = b1;
+...
+b1 = null;
+```
+
+Here, **b1** has been set to **null**, but **b2** still points to the original object.
+
+**REMEMBER**: When you assign one object reference variable to another object reference variable,
+you are not creating a copy of the object, you are only making a copy of the reference.
 
 ## Introducing Methods
 
+As mentioned at the beginning of this chapter, classes usually consist of two things:
+- instance variables
+- methods
+
+The topic of methods is a large one because Java gives them so much power and flexibility. In fact,
+much of the next chapter is devoted to methods. However, there are some fundamentals that you
+need to learn now so that you can begin to add methods to your classes:
+
+This is the general form of a method:
+
+```java
+type name(parameter-list) {
+  // body of method
+}
+```
+
+Here, _type_ specifies the type of data returned by the method. This can be any valid type, including
+class types that you create. If the method does not return a value, its return type must be **void**.
+
+The name of the method is specified by _name_. This can be any legal identifier other than those
+already used by other items within the current scope.
+
+The _parameter-list_ is a sequence of type and identifier pairs separated by commas. Parameters
+are essentially variables that receive the value of the arguments passed to the method when it
+is called. If the method has no parameters, then the parameter list will be empty.
+
+Methods that have a return type other than **void** return a value to the calling routine using
+the following form of the **return** statement:
+
+return _value_;
+
+Here, _value_ is the value returned.
+
+In the next few sections, you will see how to create various types of methods, including those
+that take parameters and those that return values.
+
 ### Adding a Method to the Box Class
+
+Although it is perfectly fine to create a class that contains only data, it rarely happens. Most
+of the time, you will use methods to access the instance variables defined by the class.
+
+In fact, methods define the interface to most classes. This allows the class implementator to
+hide the specific layout of internal data structures behind cleaner method abstractions. In
+addition to defining methods that provide access to data, you can also define methods that are
+used internally by the class itself.
+
+Let's begin by adding a method to the **Box** class. It may have occurred to you while looking
+at the preceding programs that the computation of a box's volume was something that was best
+handled by the **Box** class rather than **BoxDemo** class.
+
+After all, since the volume of a box is dependent upon the size of the box, it makes sense to have
+the **Box** class compute it. To do this, you must add a method to **Box**, as shown here:
+
+[BoxDemoThree.java](./fundamentals/BoxDemoThree.java)
+
+Look at the following two lines of code:
+
+```java
+mybox1.volume();
+mybox2.volume();
+```
+
+The first line here invokes the **volume()** method on **mybox1**. That is, it calls **volume()**
+relative to the **mybox1** object, using the object's name followed by the dot operator.
+
+Thus, the call to **mybox1.volume()** displays the volume of the box defined by **mybox1**,
+and the call to **mybox2.volume()** displays the volume of the box defined by **mybox2**.
+
+Each time **volume()** is invoked, it displays the volume for the specified box.
+
+If you are unfamiliar with the concept of calling a method, the following discussion will help
+clear things up.
+
+When **mybox1.volume()** is executed, the Java run-time system transfers control to the code
+defined inside **volume()**. After the statements inside **volume()** have executed, control
+is returned to the calling routine, and execution resumes with the line of code following the
+call.
+
+In the most general sense, a method is Java's way of implementing subroutines.
+
+There is something very important to notice inside the **volume()** method: the instance variables
+**width**, **height**, and **depth** are referred to directly, without preceding them with an
+object name or the dot operator.
+
+When a method uses an instance variable that is defined by its class, it does so directly, without
+explicit reference to an object and without use of the dot operator.
+
+This is easy to understand if you think about it. A method is always invoked relative to some
+object of its class. Once this invocation has occurred, the object is known. Thus, within a method,
+there is no need to specify the object a second time. This means that **width**, **height**, and
+**depth** inside **volume()** implicitly refer to the copies of those variables found in the 
+object that invokes **volume()**.
+
+Let's review: When an instance variable is accessed by code that is not part of the class in which
+that instance variable is defined, it must be done through an object, by use of the dot operator.
+However, when an instance variable is accessed by code that is part of the same class as the
+instance variable, that variable can be referred to directly. The same thing applies to methods.
 
 ### Returning a Value
 
+While the implementation of **volume()** does move the computation of a box's volume inside
+the **Box** class where it belongs, this is not the best way to do it.
+
+For example, what if another part of your program wanted to know the volume of a box but not
+display its value? A better way to implement **volume()** is to have it compute the volume of
+the box and return the result to the caller.
+
+The following example, an improved version of the preceding program, does just that:
+
+[BoxDemoFour.java](./fundamentals/BoxDemoFour.java)
+
+There are two important things to understand about returning values:
+- The type of data returned by a method must be compatible with the return type specified by
+the method. For example, if the return type of some method is **boolean**, you could not return
+integer.
+- The variable receiving the value returned by a method (such as **vol**, in this case) must also
+be compatible with the return type specified for the method.
+
 ### Adding a Method That Takes Parameters
+
+While some methods don't need parameters, most do. Parameters allow a method to be generalized.
+That is, a parameterized method can operate on a variety of data and/or be used in a number of
+slightly different situations.
+
+To illustrate this point, let's use a very simple example. Here is a method that returns the
+square of the number 10.
+
+```java
+int square() {
+    return 10 * 10;
+}
+```
+
+While this method does, indeed, return the value of 10 squared, its use is very limited. However,
+if you modify the method so that it takes a parameter, as shown next, then you can make **square()**
+much more useful.
+
+```java
+int square(int i) {
+    return i * i;
+}
+```
+
+Now, **square()** will return the square of whatever value it is called with.
+
+It is important to keep the two terms _parameter_ and _argument_ straight.
+
+A _parameter_ is a variable defined by a method that receives a value when the method is called.
+For example, in **square()**, **i** is a parameter.
+
+An _argument_ is a value that is passed to a method when it is invoked. For example, **square(100)**
+passes 100 as an argument. Inside **square()**, the parameter **i** receives that value.
+
+You can use a parameterized method to improve the **Box** class. In the preceding examples, the
+dimensions of each box had to be set separately by use of a sequence of statements, such as:
+
+```java
+mybox1.width = 10;
+mybox1.height = 20;
+mybox1.depth = 15;
+```
+
+While this code works, it is troubling for two reasons. First, it is clumsy and error-prone.
+For example, it would be easy to forget to set a dimension. Second, in well-designed Java
+programs, instance variables should be accessed only through methods defined by their class.
+In the future, you can change the behavior of a method, but you can't change the behavior of
+an exposed instance variable.
+
+Thus, a better approach to setting the dimensions of a box is to create a method that takes
+the dimensions of a box in its parameters and sets each instance variable appropriately.
+
+This concept is implemented by the following program:
+
+[BoxDemoFive.java](./fundamentals/BoxDemoFive.java)
 
 ## Constructors
 

@@ -469,11 +469,136 @@ This concept is implemented by the following program:
 
 ## Constructors
 
+It can be tedious to initialize all the variables in a class each time an instance is created.
+It would be simpler and more concise to have all the setup done at the time the object is first
+created. Because the requirement for initialization is so common, Java allows objects to initialize
+themselves when they are created. This automatic initialization is performed through the use of
+a constructor.
+
+A _constructor_ initializes an object immediately upon creation. It has the same name as the class
+in which it resides and is syntactically similar to a method. Once defined, the constructor is
+automatically called when the object is created, before the **new** operator completes. Constructors
+look a little strange because they have no return type, not even **void**. This is because the
+implicit return type of class's constructor is the class type itself. It is the constructor's
+job to initialize the internal state of an object so that the code creating an instance will have
+fully initialized, usable object immediately.
+
+You can rework the **Box** example so that the dimension of a box are automatically initialized
+when an object is constructed. To do so, replace **setDim()** with a constructor. Let's begin
+by defining a simple constructor that sets the dimensions of each box to the same values. This
+version is shown here:
+
+[BoxDemoSix.java](./fundamentals/BoxDemoSix.java)
+
+As you can see, both **mybox1** and **mybox2** were initialized by the **Box()** constructor
+when they were created. Since the constructor gives all boxes the same dimensions, 10 by 10 by 10,
+both **mybox1** and **mybox2** will have the same volume.
+
+The **println()** statement inside **Box()** is for the sake of illustration only. Most constructors
+will not display anything. They will simply initialize an object.
+
+Before moving on, let's reexamine the **new** operator. As you know, when you allocate an object,
+you use the following general form:
+
+_class-var_ = new _classname_();
+
+Now you can understand why the parentheses are needed after the class name. What is actually
+happening is that the constructor for the class is being called. Thus, in the line
+
+Box mybox1 = new Box();
+
+**new Box()** is calling the **Box()** constructor. When you do not explicitly define a constructor
+for a class, then Java creates a default constructor for the class. This is why the preceding
+line of code worked in earlier versions of **Box** that did not define a constructor.
+
+When using the default constructor, all non-initialized instance variables will have their default
+values, which are zero, **null**, and **false**, for numeric types, reference types, and **boolean**,
+respectively.
+
+The default constructor is often sufficient for simple classes, but it usually won't do for more
+sophisticated ones. Once you define your own constructor, the default constructor is no longer
+used.
+
 ### Parameterized Constructors
+
+While the **Box()** constructor in the preceding example does initialize a **Box** object, it is
+not very useful - all boxes have the same dimensions. What is needed is a way to construct **Box**
+objects of various dimensions. The easy solution is to add parameters to the constructor.
+
+As you can probably guess, this makes it much more useful. For example, the following version of
+**Box** defines a parameterized constructor that sets the dimensions of a box as specified by
+those parameters. Pay special attention to how **Box** objects are created.
+
+[BoxDemoSeven.java](./fundamentals/BoxDemoSeven.java)
+
+As you can see, each object is initialized as specified in the parameters to its constructor.
+For example, in the following line,
+
+Box mybox1 = new Box(10, 20, 15);
+
+the values 10, 20, and 15 are passed to the **Box()** constructor when **new** creates the object.
+Thus, **mybox1**'s copy of **width**, **height**, and **depth** will contain the values 10, 20,
+and 15, respectively.
 
 ### The this Keyword
 
+Sometimes a method will need to refer to the object that invoked it. To allow this, Java defines
+the **this** keyword. **this** can be used inside any method to refer to the _current_ object.
+
+That is, **this** is always a reference to the object on which the method was invoked. You can
+use **this** anywhere a reference to an object of the current class's type is permitted.
+
+To better understand what **this** refers to, consider the following version of **Box()**:
+
+```java
+// A redundant use of this.
+Box(double w, double h, double d) {
+    this.width = w;
+    this.height = h;
+    this.depth = d;
+}
+```
+
+This version of **Box()** operates exactly like the earlier version. The use of **this** is
+redundant but perfectly correct. Inside **Box()**, **this** will always refer to the invoking
+object. While it is redundant in this case, **this** is useful in other contexts, one of which
+is explained in the next section.
+
 ### Instance Variable Hiding
+
+As you know, it is illegal in Java to declare two local variables with the same name inside the
+same or enclosing scopes. Interestingly, you can have local variables, including formal parameters
+to methods, that overlap with the names of the class's instance variables.
+
+However, when a local variable has the same name as an instance variable, the local variable
+_hides_ the instance variable.
+
+This is why **width**, **height**, and **depth** were not used as the names of the parameters
+to the **Box()** constructor inside the **Box** class. If they had been, then **width**, for
+example, would have referred to the formal parameter, hiding the instance variable **width**.
+
+While it is usually easier to simply use different names, there is another way around this situation.
+Because **this** lets you refer directly to the object, you can use it to resolve any namespace
+collisions that might occur between instance variables and local variables. For example, here
+is another version of **Box()**, which uses **width**, **height**, and **depth** for parameter
+names and then uses **this** to access the instance variables by the same name:
+
+```java
+// Use this to resolve name-space collisions.
+Box(double width, double height, double depth) {
+    this.width = width;
+    this.height = height;
+    this.depth = depth;
+}
+```
+
+A word of caution: the use of **this** in such a context can sometimes be confusing, and some
+programmers are careful not to use local variables and formal parameter names that hide instance
+variables.
+
+Of course, other programmers believe the contrary - that is a good convention to use the same
+names for clarity - and use **this** to overcome the instance variable hiding. It is a matter
+of taste which approach you adopt.
 
 ## Garbage Collection
 

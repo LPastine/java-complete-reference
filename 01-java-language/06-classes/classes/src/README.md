@@ -17,7 +17,7 @@
     - [The this Keyword](#the-this-keyword)
     - [Instance Variable Hiding](#instance-variable-hiding)
 - [Garbage Collection](#garbage-collection)
-    - [A Stack Class](#a-stack-class)
+- [A Stack Class](#a-stack-class)
 
 
 ## Class Fundamentals
@@ -602,5 +602,83 @@ of taste which approach you adopt.
 
 ## Garbage Collection
 
-### A Stack Class
+Since objects are dynamically allocated by using the **new** operator, you might be wondering
+how such objects are destroyed and their memory released for later reallocation.
 
+In some languages, such as traditional C++, dynamically allocated objects must be manually released
+by use of a **delete** operator. 
+
+Java takes a different approach; it handles deallocation for you automatically.
+
+The technique that accomplishes that is called _garbage collection_. It works like this: when
+no references to an object exist, that object is assumed to be no longer needed, and the memory
+occupied by the object can be reclaimed.
+
+There is no need to explicitly destroy objects. Garbage collection only occurs sporadically
+(if at all) during the execution of your program. It will not occur simply because one or more
+objects exist that are no longer used.
+
+Furthermore, different Java run-time implementations will take varying approaches to garbage
+collection, but for the most part, you should not have to think about it while writing your
+programs.
+
+## A Stack Class
+
+While the **Box** class is useful to illustrate the essential elements of a class, it is of
+little practical value. To show the real power of classes, this chapter will conclude with a
+more sophisticated example.
+
+One of OOP's most important benefits is the encapsulation of data and the code that manipulates
+that data. As you have seen, the class is the mechanism by which encapsulation is achieved in
+Java.
+
+By creating a class, you are creating a new data type that defines both the nature of the data
+being manipulated and the routines used to manipulate it.
+
+Further, the methods define a consistent and controlled interface to the class's data. Thus,
+you can use the class through its methods without having to worry about the details of its implementation
+or how the data is actually managed within the class.
+
+In a sense, a class like a "data engine". No knowledge of what goes on inside the engine is required
+to use the engine through its controls. In fact, since the details are hidden, its inner workings
+can be changed as needed.
+
+As long as your code uses the class through its methods, internal details can change without
+causing side effects outside the class.
+
+To see the practical application of the preceding discussion, let's develop one of archetypal
+examples of encapsulation: the stack.
+
+A _stack_ stores data using first-in, last-out ordering. That is, a stack like a stack of plates
+on a table - the first plate put down on the table is that last plate to be used.
+
+Stacks are controlled through two operations traditionally called _push_ and _pop_. To put an
+item on top of the stack, you will use push. To take an item off the stack, you will use pop.
+As you will see, it is easy to encapsulate the entire stack mechanism.
+
+Here is a class called **Stack** that implements a stack for up to ten integers:
+
+[Stack.java](./stack/Stack.java)
+
+As you can see, the **Stack** class defines two data items, two methods, and a constructor.
+The stack of integers is held by the array **stck**. This array is indexed by the variable
+**tos**, which always contains the index of the top of the stack. The **Stack()** constructor
+initializes **tos** to -1, which indicates an empty stack. The method **push()** puts an item
+on the stack. To retrieve an item, call **pop()**.
+
+Since access to the stack is through **push()** and **pop()**, the fact that the stack is held
+in an array is actually not relevant to using the stack. For example, the stack could be held
+in a more complicated data structure, such as a linked list, yet the interface defined by
+**push()** and **pop()** would remain the same.
+
+The class **TestStack**, shown here, demonstrates the **Stack** class. It creates two integer
+stacks, pushes some values onto each, and then pops them off.
+
+[TestStack.java](./stack/TestStack.java)
+
+As you can see, the contents of each stack are separate.
+
+One last point about the **Stack** class. As it is currently implemented, it is possible
+for the array that holds the stack, **stck**, to be altered by code outside the **Stack**
+class. This leaves **Stack** open to misuse or mischief. In the next chapter, you will see
+how to remedy this situation.
